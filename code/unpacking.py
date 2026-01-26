@@ -1,0 +1,6 @@
+def five_sum(a, b, c, d, e):
+    return a + b + c + d + e
+
+
+lst = [1, 2, 3, 4, 5]
+print(five_sum(*lst))
