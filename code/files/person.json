@@ -1,0 +1,9 @@
+{
+    "name": "Bob",
+    "country": "United Kingdom",
+    "city": "London",
+    "skills": [
+        "JavaScript",
+        "Python"
+    ]
+}
