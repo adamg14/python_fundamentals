@@ -68,7 +68,7 @@ print(s1.getLocation())
 # the statistics inherist from the list class and then extends the features
 class Statistics(list):
 
-    def count(self):
+    def count_items(self):
         return len(self)
     
     def sum(self):
@@ -77,17 +77,69 @@ class Statistics(list):
     def min(self):
         return min(self)
     
+    def max(self):
+        return max(self)
+    
+    def range(self):
+        return max(self) - min(self)
+    
+    def mean(self):
+        return sum(self) / len(self)
+    
+    def median(self):
+        if len(self) % 2 == 0:
+            return (sorted(self)[len(self) // 2 - 1] + sorted(self)[len(self)//2]) / 2
+        else:
+            return sorted(self)[len(self) // 2]
+    
+    def mode(self):
+        max_count = 0
+        mode = None
+        for value in self:
+            count = self.count(value)
+            if count > max_count:
+                max_count = count
+                mode = value
+        
+        return {'mode': mode, 'count': max_count}
+    
+    # standard deviation
+    def std(self):
+        return round(self.var() ** 0.5, 2)
+    
+    # variance
+    def var(self):
+        return round(sum((value - self.mean()) ** 2 for value in self)/ len(self), 2)
+    
+    def freq_dist(self):
+        set_self = set(self)
+        frequency = [((self.count(item) / len(self)) * 100, item) for item in set_self]
+        return sorted(frequency, key=lambda x: x[0], reverse=True)
+    
     def describe(self):
         return f"""
-        Count: {self.cont()}
+        Count: {self.count_items()}
         Sum: {self.sum()}
         Min: {self.min()}
+        Max: {self.max()},
+        Range: {self.range()},
+        Mean: {self.mean()},
+        Median: {self.median()},
+        Mode: {self.mode()},
+        Standard Deviation: {self.std()},
+        Variance: {self.var()},
+        Frequency Distribution: {self.freq_dist()}
         """
     
 ages = Statistics([31, 26, 34, 37, 27, 26, 32, 32, 26, 27, 27, 24, 32, 33, 27, 25, 26, 38, 37, 31, 34, 24, 33, 29, 26])
-print(ages.count())
+print(ages.count_items())
 print(ages.sum())
 print(ages.min())
+print(f"this should be the median : {ages.median()}")
+print(ages.mode())
+print(ages.freq_dist())
+print(ages.var())
+print(ages.std())
 
 
 class PersonAccount():
@@ -103,10 +155,35 @@ class PersonAccount():
         # optionally could be defined as lists below
         self.incomes = incomes
         self.expenses = expenses
-
+    
+    def account_balance(self):
+        return self.incomes - self.expenses
+    
     def total_income(self):
         return self.incomes
     
+    def total_expenses(self):
+        return self.expenses
+    
+    def add_income(self, amount):
+        self.incomes += amount
+    
+    def reduce_income(self, amount):
+        self.incomes -= amount
+    
+    def add_expense(self, amount):
+        self.expenses += amount
+    
+    def reduce_expenses(self, amount):
+        self.expenses -= amount
+        
+    def account_info(self):
+        return f"""
+        first_name: {self.first_name},
+        last_name: {self.last_name},
+        total_income: {self.total_income()},
+        total_expenses: {self.total_expenses()}
+        account_balance: {self.account_balance()}"""
     
 
 person_one = PersonAccount(
