@@ -19,3 +19,22 @@ db.students.insert_one({
 })
 
 print(client.list_database_names())
+
+
+def get_students():
+    students = db.students.find({})
+    return students
+
+
+example_query = {
+    "city": "London"
+}
+def get_students(query, limit=None, sort='name', reverse=-1):
+    filtered_students = db.students.find(query).limit(limit).sort(sort, reverse)
+    return filtered_students
+
+def find_student(input_name):
+    student = db.students.find_one({
+        "name": input_name
+    })
+    return student
